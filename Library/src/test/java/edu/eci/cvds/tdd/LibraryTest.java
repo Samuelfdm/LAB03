@@ -37,4 +37,16 @@ class LibraryTest {
         assertTrue(result);
         assertEquals(2, library.getBooks().get(book)); // Verifica la cantidad del libro existente
     }
+
+    @Test
+    void testAddBookNullBook() {
+        // Arrange
+        Library library = new Library();
+
+        // Act
+        boolean result = library.addBook(null);
+
+        // Assert
+        assertFalse(result);
+    }
 }

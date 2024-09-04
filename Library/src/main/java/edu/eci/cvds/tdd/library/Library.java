@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Collections;
 
 /**
  * Library responsible for manage the loans and the users.
@@ -35,8 +36,8 @@ public class Library {
      * @return true if the book was stored false otherwise.
      */
     public boolean addBook(Book book) {
-        //TODO Implement the logic to add a new book into the map.
-        return false;
+        books.put(book, 1);
+        return books.containsKey(book);
     }
 
     /**
@@ -75,4 +76,11 @@ public class Library {
         return users.add(user);
     }
 
+    /**
+     * Return a copy of the map or a read-only view
+     * @return the copy of the map books
+     */
+    public Map<Book, Integer> getBooks() {
+        return Collections.unmodifiableMap(new HashMap<>(books));
+    }
 }

@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import edu.eci.cvds.tdd.library.*;
 import edu.eci.cvds.tdd.library.book.Book;
 import edu.eci.cvds.tdd.library.loan.Loan;
+import edu.eci.cvds.tdd.library.loan.LoanStatus;
 import edu.eci.cvds.tdd.library.user.User;
 
 class LibraryTest {
@@ -48,5 +49,19 @@ class LibraryTest {
 
         // Assert
         assertFalse(result);
+    }
+
+    @Test
+    public void testBookAvailable() {
+        // Arrange
+        Library library = new Library();
+        Book book = new Book("LibroNuevo", "Santiago", "ISBN123");
+        library.addBook(book);
+
+        // Act
+        Book foundBook = library.findBook("ISBN123");
+
+        // Assert
+        assertNotNull(foundBook);
     }
 }

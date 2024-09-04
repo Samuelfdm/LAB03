@@ -75,6 +75,15 @@ public class Library {
         return null;
     }
 
+    public User findUser(String userId) {
+        for (User user : users) {
+            if (user.getId().equals(userId)) {
+                return user;
+            }
+        }
+        return null;
+    }
+
     /**
      * This method return a loan, meaning that the amount of books should be increased by 1, the status of the Loan
      * in the loan list should be {@link edu.eci.cvds.tdd.library.loan.LoanStatus#RETURNED} and the loan return

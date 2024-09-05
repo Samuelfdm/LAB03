@@ -1,4 +1,4 @@
-package test.java.edu.eci.cvds.tdd;
+package edu.eci.cvds.tdd.library;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
@@ -52,7 +52,7 @@ class LibraryTest {
     }
 
     @Test
-    void testBookAvailable() {
+    void testFindBookAvailable() {
         // Arrange
         Library library = new Library();
         Book book = new Book("LibroNuevo", "Santiago", "ISBN123");
@@ -66,7 +66,7 @@ class LibraryTest {
     }
 
     @Test
-    void testUserExists() {
+    void testFindUserExists() {
         // Arrange
         Library library = new Library();
         User user = new User("Santiago", "123"); 
@@ -78,21 +78,23 @@ class LibraryTest {
         // Assert
         assertNotNull(foundUser);
     }
-    
+
     @Test
-    void testLoanAlreadyExists() {
+    public void testLoanBookUserAvailableAndExisting() {
         // Arrange
         Library library = new Library();
-        User user = new User("santiago", "1233"); 
-        library.addUser(user);
-        Book book = new Book("BookTitle", "samuel", "ISBN123");
+        Book book = new Book("pepe", "Clean Code", "12345");
         library.addBook(book);
-        library.loanABook("santiago", "ISBN123");
+        User user = new User("Sam", "11111");
+        library.addUser(user);
 
         // Act
-        Loan loan = library.loanABook("santiago", "ISBN123");
+        Loan loan = library.loanABook(user.getId(), book.getIsbn());
 
         // Assert
-        assertNull(loan);
+        assertNotNull(loan);
+        assertEquals(book, loan.getBook());
+        assertEquals(user, loan.getUser());
+        assertEquals(LoanStatus.ACTIVE, loan.getStatus());
     }
 }

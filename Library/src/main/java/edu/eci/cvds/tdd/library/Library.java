@@ -61,49 +61,13 @@ public class Library {
      *
      * @return The new created loan.
      */
-    public Loan loanABook(String id, String isbn) {
-        if (id == null || id.isEmpty() || isbn == null || isbn.isEmpty()) {
-            return null;
-        }
-
-        User user = findUser(id);
+    public Loan loanABook(String userId, String isbn) {
+        User user = findUser(userId);
         Book book = findBook(isbn);
-        if (user == null || book == null) {
-            return null;
-        }
         Loan loan = new Loan(user, book, LocalDateTime.now(), LoanStatus.ACTIVE);
         loans.add(loan);
-
-        int count = books.get(book);
-        if (count > 1) {
-            books.put(book, count - 1);
-        } else {
-            books.remove(book);
-        }
-
         return loan;
     }
-    
-
-
-    public Book findBook(String isbn) {
-        for (Book book : books.keySet()) {
-            if (book.getIsbn().equals(isbn)) {
-                return book;
-            }
-        }
-        return null;
-    }
-    
-    public User findUser(String id) {
-        for (User user : users) {
-            if (user.getId().equals(id)) {
-                return user;
-            }
-        }
-        return null;
-    }
-
 
     /**
      * This method return a loan, meaning that the amount of books should be increased by 1, the status of the Loan
@@ -123,6 +87,24 @@ public class Library {
         return users.add(user);
     }
 
+    public Book findBook(String isbn) {
+        for (Book book : books.keySet()) {
+            if (book.getIsbn().equals(isbn)) {
+                return book;
+            }
+        }
+        return null;
+    }
+    
+    public User findUser(String id) {
+        for (User user : users) {
+            if (user.getId().equals(id)) {
+                return user;
+            }
+        }
+        return null;
+    }
+
     /**
      * Return a copy of the map or a read-only view
      * @return the copy of the map books
@@ -133,5 +115,9 @@ public class Library {
 
     public List<Loan> getLoans() {
         return loans;
+    }
+
+    public List<User> getUsers() {
+        return users;
     }
 }

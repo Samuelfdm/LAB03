@@ -61,30 +61,58 @@ public class Library {
      *
      * @return The new created loan.
      */
-    public Loan loanABook(String id, String isbn) {
-        if (id == null || id.isEmpty() || isbn == null || isbn.isEmpty()) {
-            return null;
-        }
-
-        User user = findUser(id);
+    public Loan loanABook(String userId, String isbn) {
+        Loan answer = null;
+        User user = findUser(userId);
         Book book = findBook(isbn);
-        if (user == null || book == null) {
+        if (user != null && book != null) {
+            // Check for existing active loan for the same book
+            boolean existingLoan = false;
+            for (Loan loan : loans) {
+                if (loan.getUser().equals(user) && loan.getBook().equals(book) && loan.getStatus() == LoanStatus.ACTIVE) {
+                    existingLoan = true;
+                }
+            }
+
+            if (!existingLoan) {
+                //Check books amount
+                int amount = books.get(book);
+                if (amount >= 1) {
+                    answer = new Loan(user, book, LocalDateTime.now(), LoanStatus.ACTIVE);
+                    loans.add(answer);
+                    books.put(book, amount - 1);
+                }
+            }
+        }       
+        return answer;
+    }
+
+    /**
+     * This method return a loan, meaning that the amount of books should be increased by 1, the status of the Loan
+     * in the loan list should be {@link edu.eci.cvds.tdd.library.loan.LoanStatus#RETURNED} and the loan return
+     * date should be the current date, validate that the loan exist.
+     *
+     * @param loan loan to return.
+     *
+     * @return the loan with the RETURNED status.
+     */
+    public Loan returnLoan(Loan loan) {
+        if (loan == null) {
             return null;
         }
-        Loan loan = new Loan(user, book, LocalDateTime.now(), LoanStatus.ACTIVE);
+        loan.setStatus(LoanStatus.RETURNED);
+        loan.setReturnDate(LocalDateTime.now());
         loans.add(loan);
-
-        int count = books.get(book);
-        if (count > 1) {
-            books.put(book, count - 1);
-        } else {
-            books.remove(book);
-        }
-
+        // Update book availability
+        int count = books.get(loan.getBook());
+        books.put(loan.getBook(), count + 1);
+    
         return loan;
     }
-    
 
+    public boolean addUser(User user) {
+        return users.add(user);
+    }
 
     public Book findBook(String isbn) {
         for (Book book : books.keySet()) {
@@ -104,25 +132,6 @@ public class Library {
         return null;
     }
 
-
-    /**
-     * This method return a loan, meaning that the amount of books should be increased by 1, the status of the Loan
-     * in the loan list should be {@link edu.eci.cvds.tdd.library.loan.LoanStatus#RETURNED} and the loan return
-     * date should be the current date, validate that the loan exist.
-     *
-     * @param loan loan to return.
-     *
-     * @return the loan with the RETURNED status.
-     */
-    public Loan returnLoan(Loan loan) {
-        //TODO Implement the login of loan a book to a user based on the UserId and the isbn.
-        return null;
-    }
-
-    public boolean addUser(User user) {
-        return users.add(user);
-    }
-
     /**
      * Return a copy of the map or a read-only view
      * @return the copy of the map books
@@ -133,5 +142,9 @@ public class Library {
 
     public List<Loan> getLoans() {
         return loans;
+    }
+
+    public List<User> getUsers() {
+        return users;
     }
 }

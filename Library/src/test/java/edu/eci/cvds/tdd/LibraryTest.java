@@ -79,4 +79,20 @@ class LibraryTest {
         assertNotNull(foundUser);
     }
     
+    @Test
+    void testLoanAlreadyExists() {
+        // Arrange
+        Library library = new Library();
+        User user = new User("santiago", "1233"); 
+        library.addUser(user);
+        Book book = new Book("BookTitle", "samuel", "ISBN123");
+        library.addBook(book);
+        library.loanABook("santiago", "ISBN123");
+
+        // Act
+        Loan loan = library.loanABook("santiago", "ISBN123");
+
+        // Assert
+        assertNull(loan);
+    }
 }

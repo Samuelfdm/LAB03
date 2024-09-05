@@ -97,4 +97,18 @@ class LibraryTest {
         assertEquals(user, loan.getUser());
         assertEquals(LoanStatus.ACTIVE, loan.getStatus());
     }
+
+    @Test
+    public void testLoanBookInexistenteNull() {
+        // Arrange
+        Library library = new Library();
+        User user = new User("Sam", "11111");
+        library.addUser(user);
+
+        // Act
+        Loan loan = library.loanABook(user.getId(), null);
+
+        // Assert
+        assertNull(loan);
+    }
 }

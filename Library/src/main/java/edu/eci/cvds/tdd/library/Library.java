@@ -62,11 +62,14 @@ public class Library {
      * @return The new created loan.
      */
     public Loan loanABook(String userId, String isbn) {
+        Loan answer = null;
         User user = findUser(userId);
         Book book = findBook(isbn);
-        Loan loan = new Loan(user, book, LocalDateTime.now(), LoanStatus.ACTIVE);
-        loans.add(loan);
-        return loan;
+        if (user != null && book != null) {
+            answer = new Loan(user, book, LocalDateTime.now(), LoanStatus.ACTIVE);
+            loans.add(answer);
+        }       
+        return answer;
     }
 
     /**

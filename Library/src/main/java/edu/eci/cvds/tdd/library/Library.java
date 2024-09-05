@@ -97,8 +97,14 @@ public class Library {
      * @return the loan with the RETURNED status.
      */
     public Loan returnLoan(Loan loan) {
-        //TODO Implement the login of loan a book to a user based on the UserId and the isbn.
-        return null;
+        loan.setStatus(LoanStatus.RETURNED);
+        loan.setReturnDate(LocalDateTime.now());
+        loans.add(loan);
+        // Update book availability
+        int count = books.get(loan.getBook());
+        books.put(loan.getBook(), count + 1);
+    
+        return loan;
     }
 
     public boolean addUser(User user) {

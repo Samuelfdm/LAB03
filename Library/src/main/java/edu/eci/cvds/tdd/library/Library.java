@@ -73,10 +73,15 @@ public class Library {
                     existingLoan = true;
                 }
             }
-            
+
             if (!existingLoan) {
-                answer = new Loan(user, book, LocalDateTime.now(), LoanStatus.ACTIVE);
-                loans.add(answer);
+                //Check books amount
+                int amount = books.get(book);
+                if (amount >= 1) {
+                    answer = new Loan(user, book, LocalDateTime.now(), LoanStatus.ACTIVE);
+                    loans.add(answer);
+                    books.put(book, amount - 1);
+                }
             }
         }       
         return answer;

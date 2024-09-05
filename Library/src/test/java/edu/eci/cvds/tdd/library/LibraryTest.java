@@ -174,4 +174,22 @@ class LibraryTest {
         // Assert
         assertNull(loan);
     }
+
+    @Test
+    public void testLoanBookNotAvailable() {
+        // Arrange
+        Library library = new Library();
+        Book book = new Book("12345", "Clean Code", "Robert C. Martin");
+        library.addBook(book);
+        User user = new User("Sam", "33333");
+        library.addUser(user);
+        library.loanABook(user.getId(), book.getIsbn()); // Préstamo del libro
+
+        // Act
+        Loan loan = library.loanABook(user.getId(), book.getIsbn());
+
+        // Assert
+        assertEquals(0, library.getBooks().get(book));
+        assertNull(loan);
+    }
 }

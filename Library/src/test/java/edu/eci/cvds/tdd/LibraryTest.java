@@ -52,7 +52,7 @@ class LibraryTest {
     }
 
     @Test
-    public void testBookAvailable() {
+    void testBookAvailable() {
         // Arrange
         Library library = new Library();
         Book book = new Book("LibroNuevo", "Santiago", "ISBN123");
@@ -66,7 +66,7 @@ class LibraryTest {
     }
 
     @Test
-    public void testUserExists() {
+    void testUserExists() {
         // Arrange
         Library library = new Library();
         User user = new User("Santiago", "123"); 
@@ -77,5 +77,22 @@ class LibraryTest {
 
         // Assert
         assertNotNull(foundUser);
+    }
+    
+    @Test
+    void testLoanAlreadyExists() {
+        // Arrange
+        Library library = new Library();
+        User user = new User("santiago", "1233"); 
+        library.addUser(user);
+        Book book = new Book("BookTitle", "samuel", "ISBN123");
+        library.addBook(book);
+        library.loanABook("santiago", "ISBN123");
+
+        // Act
+        Loan loan = library.loanABook("santiago", "ISBN123");
+
+        // Assert
+        assertNull(loan);
     }
 }

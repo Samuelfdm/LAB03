@@ -61,24 +61,18 @@ public class Library {
      *
      * @return The new created loan.
      */
-    public Loan loanABook(String userId, String isbn) {
-  
-        if (userId == null || userId.isEmpty() || isbn == null || isbn.isEmpty()) {
+    public Loan loanABook(String id, String isbn) {
+        if (id == null || id.isEmpty() || isbn == null || isbn.isEmpty()) {
             return null;
         }
 
-        User user = findUser(userId);
+        User user = findUser(id);
         Book book = findBook(isbn);
-
-
         if (user == null || book == null) {
             return null;
         }
-
-
         Loan loan = new Loan(user, book, LocalDateTime.now(), LoanStatus.ACTIVE);
         loans.add(loan);
-
 
         int count = books.get(book);
         if (count > 1) {
@@ -90,6 +84,8 @@ public class Library {
         return loan;
     }
     
+
+
     public Book findBook(String isbn) {
         for (Book book : books.keySet()) {
             if (book.getIsbn().equals(isbn)) {

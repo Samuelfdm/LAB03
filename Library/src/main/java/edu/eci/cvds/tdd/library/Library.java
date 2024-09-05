@@ -61,9 +61,33 @@ public class Library {
      *
      * @return The new created loan.
      */
-
     public Loan loanABook(String userId, String isbn) {
-        return null;
+  
+        if (userId == null || userId.isEmpty() || isbn == null || isbn.isEmpty()) {
+            return null;
+        }
+
+        User user = findUser(userId);
+        Book book = findBook(isbn);
+
+
+        if (user == null || book == null) {
+            return null;
+        }
+
+
+        Loan loan = new Loan(user, book, LocalDateTime.now(), LoanStatus.ACTIVE);
+        loans.add(loan);
+
+
+        int count = books.get(book);
+        if (count > 1) {
+            books.put(book, count - 1);
+        } else {
+            books.remove(book);
+        }
+
+        return loan;
     }
     
     public Book findBook(String isbn) {
@@ -74,6 +98,16 @@ public class Library {
         }
         return null;
     }
+    
+    public User findUser(String id) {
+        for (User user : users) {
+            if (user.getId().equals(id)) {
+                return user;
+            }
+        }
+        return null;
+    }
+
 
     /**
      * This method return a loan, meaning that the amount of books should be increased by 1, the status of the Loan

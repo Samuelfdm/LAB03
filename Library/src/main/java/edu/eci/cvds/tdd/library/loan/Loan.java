@@ -2,7 +2,7 @@ package edu.eci.cvds.tdd.library.loan;
 
 import edu.eci.cvds.tdd.library.book.Book;
 import edu.eci.cvds.tdd.library.user.User;
-
+import edu.eci.cvds.tdd.library.loan.LoanStatus;
 import java.time.LocalDateTime;
 
 public class Loan {

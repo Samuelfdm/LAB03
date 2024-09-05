@@ -42,7 +42,7 @@ public class Library {
 <span class="fc" id="L42">            state = false;</span>
 <span class="fc bfc" id="L43" title="All 2 branches covered.">        } else if (books.containsKey(book)){</span>
 <span class="fc" id="L44">            books.put(book, books.get(book) + 1);</span>
-<span class="fc" id="L45">        } else {</span>
+        } else {
 <span class="fc" id="L46">            books.put(book, 1);</span>
         }
 <span class="fc" id="L48">        return state;</span>
@@ -72,7 +72,7 @@ public class Library {
 <span class="pc bpc" id="L72" title="2 of 6 branches missed.">                if (loan.getUser().equals(user) &amp;&amp; loan.getBook().equals(book) &amp;&amp; loan.getStatus() == LoanStatus.ACTIVE) {</span>
 <span class="fc" id="L73">                    existingLoan = true;</span>
                 }
-            }
+<span class="fc" id="L75">            }</span>
 
 <span class="fc bfc" id="L77" title="All 2 branches covered.">            if (!existingLoan) {</span>
                 //Check books amount
@@ -119,7 +119,7 @@ public class Library {
 <span class="fc bfc" id="L119" title="All 2 branches covered.">            if (book.getIsbn().equals(isbn)) {</span>
 <span class="fc" id="L120">                return book;</span>
             }
-        }
+<span class="fc" id="L122">        }</span>
 <span class="fc" id="L123">        return null;</span>
     }
     
@@ -128,7 +128,7 @@ public class Library {
 <span class="fc bfc" id="L128" title="All 2 branches covered.">            if (user.getId().equals(id)) {</span>
 <span class="fc" id="L129">                return user;</span>
             }
-        }
+<span class="fc" id="L131">        }</span>
 <span class="fc" id="L132">        return null;</span>
     }
 

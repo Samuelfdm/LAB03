@@ -99,7 +99,7 @@ class LibraryTest {
     }
 
     @Test
-    public void testLoanBookNonexistentNull() {
+    public void testLoanBookNonexistentBookNull() {
         // Arrange
         Library library = new Library();
         User user = new User("Sam", "11111");
@@ -120,9 +120,39 @@ class LibraryTest {
         library.addUser(user);
         Book book = new Book("pepe", "Clean Code", "12345");
         library.addBook(book);
-        
+
         // Act
         Loan loan = library.loanABook(user.getId(), "8888");
+
+        // Assert
+        assertNull(loan);
+    }
+
+    @Test
+    public void testLoanBookNonexistentUserNull() {
+        // Arrange
+        Library library = new Library();
+        Book book = new Book("pepe", "Clean Code", "12345");
+        library.addBook(book);
+        
+        // Act
+        Loan loan = library.loanABook(null, book.getIsbn());
+
+        // Assert
+        assertNull(loan);
+    }
+
+    @Test
+    public void testLoanBookNonexistentUserId() {
+        // Arrange
+        Library library = new Library();
+        User user = new User("Sam", "33333");
+        library.addUser(user);
+        Book book = new Book("pepe", "Clean Code", "12345");
+        library.addBook(book);
+        
+        // Act
+        Loan loan = library.loanABook("2222", book.getIsbn());
 
         // Assert
         assertNull(loan);

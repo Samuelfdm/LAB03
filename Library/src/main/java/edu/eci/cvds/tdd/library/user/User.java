@@ -9,6 +9,11 @@ public class User {
         this.id = id;
     }
 
+    public User(String id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     public String getName() {
         return name;
     }

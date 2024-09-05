@@ -66,8 +66,18 @@ public class Library {
         User user = findUser(userId);
         Book book = findBook(isbn);
         if (user != null && book != null) {
-            answer = new Loan(user, book, LocalDateTime.now(), LoanStatus.ACTIVE);
-            loans.add(answer);
+            // Check for existing active loan for the same book
+            boolean existingLoan = false;
+            for (Loan loan : loans) {
+                if (loan.getUser().equals(user) && loan.getBook().equals(book) && loan.getStatus() == LoanStatus.ACTIVE) {
+                    existingLoan = true;
+                }
+            }
+            
+            if (!existingLoan) {
+                answer = new Loan(user, book, LocalDateTime.now(), LoanStatus.ACTIVE);
+                loans.add(answer);
+            }
         }       
         return answer;
     }

@@ -97,6 +97,9 @@ public class Library {
      * @return the loan with the RETURNED status.
      */
     public Loan returnLoan(Loan loan) {
+        if (loan == null) {
+            return null;
+        }
         loan.setStatus(LoanStatus.RETURNED);
         loan.setReturnDate(LocalDateTime.now());
         loans.add(loan);

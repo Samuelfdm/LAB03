@@ -211,4 +211,13 @@ class LibraryTest {
         assertEquals(LoanStatus.RETURNED, returnedLoan.getStatus());
         assertEquals(1, library.getBooks().get(book));
     }
+
+    public void testReturnLoanNullLoan() {
+        //Arrange
+        Library library = new Library();
+
+        //Act
+        Loan returnedLoan = library.returnLoan(null);
+        assertNull(returnedLoan);
+      }
 }
